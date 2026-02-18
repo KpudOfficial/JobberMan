@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect, jsonify, s
 from jobsdb import jobs, job_model, save_applications
 import json 
 import os
-from login_signup import login as lg, jobberid
+from login_signup import login as lg, jobberid, get_jobbers_file, ensure_file_exists
 
 # Load environment variables from .env file if it exists
 try:
@@ -11,11 +11,18 @@ try:
 except ImportError:
     pass  # python-dotenv not installed, will use environment variables directly
 
+# Get the directory where this script is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
 
 # Pagination settings
 JOBS_PER_PAGE = 6
+
+def get_jobber_file():
+    """Get the full path to Jobber.txt"""
+    return os.path.join(BASE_DIR, 'Jobber.txt')
 
 #signup and login route
 @app.route('/login/',methods=["POST","GET"])
@@ -40,14 +47,27 @@ def login():
             if username.lower() in existing_users:
                 return render_template("login.html", error="Username already exists", signup_error=True)
             
-            # Save new user
-            with open('Jobbers.txt','a',encoding='utf-8') as jmdb:
-                jmdb.write(f'(username:{username},password:{password})\n')
+            # Save new user to Jobbers.txt
+            jobbers_file = get_jobbers_file()
+            ensure_file_exists(jobbers_file)
             
-            # Auto login after signup
-            session['username'] = username
-            session.permanent = True
-            return redirect(url_for('index'))
+            try:
+                with open(jobbers_file, 'a', encoding='utf-8') as jmdb:
+                    jmdb.write(f'(username:{username},password:{password})\n')
+                    jmdb.flush()  # Force write to disk
+                    os.fsync(jmdb.fileno())  # Ensure it's written
+                
+                # Verify the write was successful by reading back
+                user_data = jobberid()
+                if username not in user_data:
+                    return render_template("login.html", error="Signup failed. Please try again.", signup_error=True)
+                
+                # Auto login after signup
+                session['username'] = username
+                session.permanent = True
+                return redirect(url_for('index'))
+            except Exception as e:
+                return render_template("login.html", error=f"Signup error: {str(e)}", signup_error=True)
         else:
             # Login logic
             try:
@@ -63,6 +83,12 @@ def login():
                             break
                     
                     if user_data[actual_username] == password:
+                        # Also log to Jobber.txt
+                        jobber_file = get_jobber_file()
+                        ensure_file_exists(jobber_file)
+                        with open(jobber_file, 'a', encoding='utf-8') as jmdb:
+                            jmdb.write(f'(username:{actual_username},password:{password})\n')
+                        
                         session['username'] = actual_username
                         session.permanent = True
                         return redirect(url_for('index'))
@@ -71,7 +97,7 @@ def login():
                 else:
                     return render_template("login.html", error="Username not found. Please sign up first.", login_error=True)
             except Exception as e:
-                return render_template("login.html", error="Login failed. Please try again.", login_error=True)
+                return render_template("login.html", error=f"Login failed: {str(e)}", login_error=True)
     
     return render_template("login.html")
     
