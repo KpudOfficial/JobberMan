@@ -15,7 +15,15 @@ except ImportError:
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
+
+# Set secret key with multiple fallbacks
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    # Fallback secret key for development/testing
+    SECRET_KEY = '37d17883380e7759b136d1e5ebb1d2403e538a2c5c1a11391294844a46728420'
+    print("WARNING: Using fallback SECRET_KEY. Set SECRET_KEY environment variable in production.")
+
+app.secret_key = SECRET_KEY
 
 # Pagination settings
 JOBS_PER_PAGE = 6
