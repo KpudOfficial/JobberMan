@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.log
+instance/
+.env
+Jobber.txt
+Jobbers.txt
+jobs.json
+*.db
+.DS_Store
+Thumbs.db

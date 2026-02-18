@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Application Submitted
+{% endblock title %}
+    
+
+{% block csslink %}
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style1.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles/application.css')}}">
+{% endblock %}
+
+{% block bodyContent %}
+    <section style="background:transparent;">
+        <div>
+            
+            <img style="width:100%; padding-top:1%; height:50%;z-index:-1;" src="{{url_for('static',filename='images/referral background.jpg')}}">
+            <div>
+                <span class="gradient" style="display:block; text-align:center;font-family:Verdana;font-size:2.5em;position:sticky;top:0%;left:0%;">JobberMan</span>
+                <span class="gradient" style="display:block; text-align:center;font-family:'Gill Sans';font-size:2.5em;position:sticky;top:20%;left:30%;margin-bottom:10%;">Congratulations!! <br></span> 
+                <span style="display:block; text-align:center;font-family:Verdana;font-size:1.2em;position:sticky; text-wrap:wrap;">You have succesfully submitted your application for {{job['title']}}.</span>
+            </div>
+        </div>
+        <h1>{{job.title}}</h1>
+        {% for infoname, info in applicant_info.items() %}
+            <div style="display:flex; justify-content:space-between;">
+                <span>{{infoname.upper()}}</span>:<span>{{info}}</span>
+            </div>
+        {% endfor %}
+        <h1  class="gradient">Hello world</h1>
+    </div>
+    {% include 'footer.html' %}
+{% endblock bodyContent %}
+
+
+
+{% block jslink %}
+<script src="{{ url_for('static',filename='scripts/application.js') }}" async defer></script>
+{% endblock jslink %}
+    

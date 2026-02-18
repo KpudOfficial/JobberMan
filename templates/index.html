@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block csslink %}
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style1.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles/index.css')}}">
+{% endblock %}
+{% block title %}
+    JobberMan
+{% endblock %}
+
+{% block bodyContent %}
+    <section class="intro-text">
+        <div id="about-us">
+            <div style="font:Verdana;margin:2%;">
+                Welcome, {{name.upper()}} to JobberMan
+            </div>
+            <p>A community of individuals dedicated to bringing the job market at your footsteps</p>
+            Join the JobberMan platform today and get access to over 100+ jobs worldwide.<br>
+            Work remotely or onsite at your convenience.<br>
+            JobberMan, have a <span>wonderful</span> work experience.
+        </div>
+    </section>
+    <section class="intro-image">
+        <img src="{{url_for('static',filename='images/mawodis.jpg')}}"/>
+        <!--<img src="{{url_for('static',filename='images/mansmi.jpg')}}"/>-->
+    </section>
+    <section class="next-text">
+        <div>
+            JobberMan Jobs
+        </div>
+    </section>
+    <section class="jobs-display">
+        {% for job in jobs %}
+            <div data-mode="{{job['mode']}}" class="attributes">
+                <div class="attributes-1">
+                    <div class="title"> {{job['title'].upper()}}</div>
+                    <div class="salary"> {{job['salary']}}</div>
+                </div>
+                <div class="attributes-2">
+                    <div class="mode"> {{job['mode']}}</div>
+                    <div><button class="apply-button"><a href="/application/{{job['id']}}"> Apply </a></button></div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+    <section class="content-navigation">
+        {% if page > 1 %}
+            <div class="previous"><a href="/?page={{ page - 1 }}" style="text-decoration:none;color:inherit;">⏪Previous</a></div>
+        {% else %}
+            <div class="previous" style="opacity:0.5;cursor:not-allowed;">⏪Previous</div>
+        {% endif %}
+        
+        <div class="page-info">Page {{ page }} of {{ total_pages }}</div>
+        
+        {% if page < total_pages %}
+            <div class="next"><a href="/?page={{ page + 1 }}" style="text-decoration:none;color:inherit;">Next⏩</a></div>
+        {% else %}
+            <div class="next" style="opacity:0.5;cursor:not-allowed;">Next⏩</div>
+        {% endif %}
+    </section>
+
+    {% include 'footer.html' %}
+{% endblock %}

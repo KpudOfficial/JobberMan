@@ -1,0 +1,78 @@
+.forms{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 3%;
+    margin: 3%;
+    border-radius: 20px;
+    box-shadow: inset 0px 0px 10px purple;
+    background-image: linear-gradient(rgb(171, 171, 236),rgb(247, 158, 158));
+    /* display: none; */
+}
+
+legend{
+    text-align: center;
+    padding: 3%;
+    margin: 10%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.1rem;
+    box-shadow: 0 0 3px gray;
+    border-radius: 20px;
+}
+
+.signup,.login{
+  padding: 10px;
+  width: 45%;
+  box-sizing: border-box;
+  border: 2px solid blue;
+  color: azure;
+  background-image: linear-gradient(gray, rgb(156, 7, 14));
+  /* background-color: red; */
+  min-height: 100vh;
+  border-radius: 20px;
+}
+
+.active{
+    background-image: linear-gradient(red,blue);
+    display: block;
+}
+.non-active{
+    display: none;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    label{
+        font-size: 1.3rem;
+        height: 20%;
+    }
+    input{
+        font-size: 1rem;
+        border-radius: 10px;
+        margin-bottom: 15%;
+        padding: 3%;
+    }
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    padding: 3%;
+    margin: 5%;
+    box-shadow: inset 0 0 5px purple;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+a:hover{
+    background: black;
+    color: red;
+    transition: all 300ms ease-in-out;
+}
+
+.new-account{
+    display: none;
+}

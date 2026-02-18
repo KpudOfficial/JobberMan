@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{url_for('static',filename='styles/sign-login.css')}}">
+    </head>
+    <body>
+        <section class="forms">
+            <section class="signup active" id="signup">
+                <legend>Signup</legend>
+                {% if signup_error %}
+                    <div style="color:red;padding:10px;margin-bottom:10px;background-color:#ffe6e6;border-radius:5px;">{{ error }}</div>
+                {% endif %}
+                <form class="registration-form" method="post" action="/login/">
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+                    <label>Password</label>
+                    <input type="Password" name="userpassword" required>
+                    <label>Confirm Password</label>
+                    <input type="Password" name="confirmpassword" required>
+                    <button id='signup-btn' type="submit">submit</button>
+                    <span style="display:block;">Already have an account</span>
+                    <a href="#login" id="login-link">login</a>
+                </form>
+            </section>
+            <section class="login" id="login">
+                <legend>Login</legend>
+                {% if login_error %}
+                    <div style="color:red;padding:10px;margin-bottom:10px;background-color:#ffe6e6;border-radius:5px;">{{ error }}</div>
+                {% endif %}
+                <form class="login-form" method="post" action="/login/">
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+                    <label>Password</label>
+                    <input type="Password" name="userpassword" required>
+                    <button type="submit">submit</button>
+                    <span style="display:block;">Create an account</span>
+                    <a href="#signup" id="signup-link">signup</a>
+                </form>
+            </section>
+        </section>
+        <section class="new-account">
+            <p style="text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                <h2>JobberMan</h2>
+                <span>You have succesfully created your account.</span>
+                <a style="width:20%; height:inherit; display:block; color:pink;" href="/login/index/" id="new-account-link">Continue</a>
+            </p>
+        </section>
+        <script src="{{url_for('static',filename='scripts/sign-login.js')}}" async defer></script>
+    </body>
+</html>
+
+
+
+

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{job['title']}}
+{% endblock title %}
+    
+{% block csslink %}
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style1.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/application.css')}}">
+{% endblock csslink %}
+    
+
+{% block bodyContent %}
+
+<section id="job-info" class="job-info">
+    <div style="margin-bottom:20px;">
+        <a href="javascript:history.back()" style="text-decoration:none;color:#008baa;font-size:1.2rem;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">← Back to Jobs</a>
+    </div>
+    <h2 class="intro-text">Application for {{job['title']}} role as a JobberMan</h2>
+    <p>
+        <h3>{{job['title']}} Responsibilities</h3>
+        {% for line in job['responsibilities'] %}
+            <ul>
+                <li class="responsibility">{{line+"."}}</li>
+            </ul>
+        {% endfor %}
+    </p>
+    <p>
+        <h3>{{job['title']}} Requirements</h3>
+        {% for line in job['requirements'] %}
+            <ol>
+                <li class="requirement" style="list-style:circle;">{{line+"."}}</li>
+            </ol>
+        {% endfor %}
+    </p>
+    <div id="apply-button"><a class="apply" href="#">Apply</a></div>
+</section>
+
+<div class="load-form">▪</div>
+
+<section id="job-application" class="job-info">
+    <div class="intro-text">Application Form</div>
+    <form action="{{job['id']}}/applied" method="post">
+        <label class="form-label" name="job-title">{{job['title']}}</label>
+        <label class="form-label">Full Name</label>
+        <input class="form-input" type="text" name="jobbername" placeholder="eg Brian Tracy" required>
+        <label class="form-label">linkedIn Url</label>
+        <input class="form-input" type="url" name="jobber_linkin_url" placeholder="" required>
+        <label class="form-label">Resume Url</label>
+        <input class="form-input" type="url" name="jobber_res_url" placeholder="" required>
+        <label class="form-label">Education</label>
+        <textarea style="height:5em;" class="form-input" type="text" name="jobber_edu" placeholder="" ></textarea>
+        <label class="form-label">Work Experience</label>
+        <textarea style="height:5em;" class="form-input" type="text" name="jobber_work" placeholder="" ></textarea>
+        <label class="form-label">Application Letter</label>
+        <input class="form-input" type="file" name="jobber_res_url" placeholder="" required>
+        <button class="apply-button" type="submit" placeholder="">Submit</button>
+    </form>
+</section>
+
+{% include 'footer.html' %}
+{% endblock bodyContent %}
+
+
+{% block jslink %}
+    <script src="{{ url_for('static',filename='scripts/application.js') }}" async defer></script>
+{% endblock jslink %}
+
+    
+
+<!--<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{{job['title']}}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{url_for('static', filename='styles/style1.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='styles/application.css')}}">
+    </head>
+    <body>
+       
+        <h1>JOBID {{job['id']}}</h1>
+        <section class="job-info">
+            <h2>Application for {{job['title']}} role as a JobberMan</h2>
+            <p>
+                <h3>{{job['title']}} Responsibilities</h3>
+                {% for line in job['responsibilities'] %}
+                    <ul>
+                        <li class="responsibility">{{line+"."}}</li>
+                    </ul>
+                {% endfor %}
+            </p>
+            <p>
+                <h3>{{job['title']}} Requirements</h3>
+                {% for line in job['requirements'] %}
+                    <ol>
+                        <li class="requirement" style="list-style:circle;">{{line+"."}}</li>
+                    </ol>
+                {% endfor %}
+            </p>
+        </section>
+        <div class="apply-button"><a class="apply" href="/">Apply</a></div>
+        <section class="job-application">
+            
+        </section>
+        
+    
+        <script src="{{ url_for('static',filename='scripts/application.js') }}" async defer></script>
+    </body>
+</html>-->
+    
+    

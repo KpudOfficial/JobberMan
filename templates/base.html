@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            {% block title %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block csslink %}
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="nav-container">
+            <div class="nav-item nav-logo"><a href="/" style="text-decoration:none;color:inherit;">JM</a></div>
+            <div class="nav-item"><a class="nav-link" href="/">Home</a></div>
+            <div class="nav-item"><button class="nav-link sub-menu1" href="">Categories</button></div>
+            
+            <div>
+                <ul class="dropdown-1">
+                    <li><a href="/">Job Type</a></li>
+                    <li><a href="/">Mode</a></li>
+                    <li><a href="#about-us">Salary</a></li>
+                    <li><a href="/">Location</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-item"><a class="nav-link" href="/">Events</a></div>
+            <div class="nav-item"><button class="nav-link sub-menu2" href="/">More</button></div>
+                
+            <div>
+                <ul class="dropdown-2">
+                    <li><a style="background:linear-gradient(to right, #008baa,#7e42a7,#6600c5,#6070fd,#2a46ff,#0099ff,#008baa);background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;animation: animate-gradient 2.5s linear infinite;" href="/logout">Logout</a></li>
+                    <li><a href="/">Profile</a></li>
+                    <li><a href="#about-us">About</a></li>
+                    <li><a href="/">Setting</a></li>
+                </ul>
+            </div>
+
+        </nav>
+        
+        {% block bodyContent %}
+
+        {% endblock %}
+       
+        <script src="{{url_for('static', filename='scripts/script1.js')}}" async defer></script>
+        {% block jslink %}
+        {% endblock %}
+    </body>
+</html>
